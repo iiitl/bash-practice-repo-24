@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-
-# TODO: Make it print out permissions of the given files in octal format
-#
-# E.g.:
-# $ perms weather ../README.md
-# 775 weather
-# 664 ../README.md
+for arg in "$@"
+do
+        echo "filename: $arg , Permission: $(stat -c "%a" "$arg")"
+done        
 
