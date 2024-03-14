@@ -26,3 +26,20 @@
 # └── Songs
 #     ├── Song1.mp3
 #     └── Song2.mp3
+
+convert_video_to_audio() {
+ local file_path="$1"
+    local output_dir="Music/${file_path%/*}"
+    mkdir -p "$output_dir"
+    local output_path="Music/${file_path%.mp4}.mp3"
+    ffmpeg -i "$file_path" -vn -ar 44100 -ac 2 -b:a 192k "$output_path"
+}
+
+find_To_Convert_Files_From_Video_To_Audio() {
+    local dir="$1"
+    find "$dir" -type f -name '*.mp4' -print0 | while IFS= read -r -d '' file; do
+        convert_video_to_audio "$file"
+    done
+}
+
+find_To_Convert_Files_From_Video_To_Audio "videos"
