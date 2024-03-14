@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-# Remove all the binary files (usually made after gcc) present inside current directory
-# Refer "man find" for more information, you can also use modern tool like fd instead of find
+# Remove all binary files in the current directory
+find . -type f -executable -exec file {} \; | grep -i 'executable' | cut -d: -f1 | xargs rm -f
+echo "All binary files in the current directory removed successfully"
