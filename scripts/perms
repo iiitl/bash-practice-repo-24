@@ -1,9 +1,20 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# TODO: Make it print out permissions of the given files in octal format
-#
-# E.g.:
-# $ perms weather ../README.md
-# 775 weather
-# 664 ../README.md
+# Check if at least one file is provided as an argument
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <file1> [<file2> ...]"
+    exit 1
+fi
+
+# Loop through each file provided as an argument
+for file in "$@"; do
+    # Check if the file exists
+    if [ ! -e "$file" ]; then
+        echo "File '$file' does not exist."
+    else
+        # Get the octal permissions of the file
+        permissions=$(stat -c "%a" "$file")
+        echo "$permissions $file"
+    fi
+done
 
