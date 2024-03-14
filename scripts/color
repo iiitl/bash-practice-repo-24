@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 
-# TODO (Run this script as): color magenta && echo hello && color reset
+# Usage: ./script_name color_name
+# Example: ./script_name magenta
 
 color() {
     echo -ne "\033[$1;$2m"
 }
 
 declare -A color_mapping=(
-    # TODO: Add more color values
-    # Refer bash color codes
+    ['black']=30
+    ['red']=31
+    ['green']=32
+    ['yellow']=33
+    ['blue']=34
     ['magenta']=35
+    ['cyan']=36
+    ['white']=37
 )
 
 if [[ $1 == 'reset' ]]; then
     color 0 00
 else
+    if [[ -z ${color_mapping[$1]} ]]; then
+        echo "Unknown color: $1"
+        exit 1
+    fi
     color 1 ${color_mapping[$1]}
 fi
-
