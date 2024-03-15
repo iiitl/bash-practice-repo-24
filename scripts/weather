@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 
-# TODO: Display weather of IIIT, Lucknow
-# For more information see: https://wttr.in/:help
+if [ $# -gt 0 ]; then
+    for arg in "$@"
+    do
+        echo "$(curl wttr.in/$arg)"
+    done
+else
+    echo "$(curl wttr.in)"
+fi
