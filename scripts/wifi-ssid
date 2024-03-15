@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-iw dev wlan0 link | grep SSID
+ssid=$(iw dev wlan0 link | grep SSID | cut -d' ' -f2-)
+echo "SSID: $ssid"
