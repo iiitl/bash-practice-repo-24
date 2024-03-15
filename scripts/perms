@@ -7,3 +7,16 @@
 # 775 weather
 # 664 ../README.md
 
+# Loop through the list of files provided as arguments
+for file in "$@"; do
+    # Check if the file exists
+    if [ -e "$file" ]; then
+        # Retrieve the octal permissions of the file and extract the last 3 digits
+        perms=$(stat -c '%a' "$file" | tail -c 4)
+        # Display the octal permissions and filename
+        echo "$perms $file"
+    else
+        # If the file does not exist, display an error message
+        echo "File '$file' does not exist."
+    fi
+done
