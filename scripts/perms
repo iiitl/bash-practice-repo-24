@@ -6,4 +6,37 @@
 # $ perms weather ../README.md
 # 775 weather
 # 664 ../README.md
+func ()
+{
+    for arg in "${@}"
+    do
+    op=$(ls -l $arg)
+    sum=0
+    result=""
+    for (( i=1; i <= 9; i++ ))
+    do
+       if [ $(($i%3)) -eq 0 ]
+       then 
+       result="${result}${sum}"
+       sum=0
+       fi
+       ch=${op:$i:1}
+       if [ $ch == 'r' ]
+       then
+       sum=$(($sum+4))
+       fi
+       if [ $ch == 'w' ]
+       then
+       sum=$(($sum+2))
+       fi
+       if [ $ch == 'x' ]
+       then
+       sum=$(($sum+1))
+       fi
+    done
+    echo "${result} ${arg}"
+    done
+}
+
+func "${@}"
 
