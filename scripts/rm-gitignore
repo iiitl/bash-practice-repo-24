@@ -2,3 +2,21 @@
 
 # Removes all files written in .gitignore of any git repository (multiple) present inside current directory
 # To find list of all git repos inside current directory you can use: "find . -name .git -type d -prune"
+# Find all git repositories in the current directory
+find . -type f -name .gitignore | while read -r gitignore; do
+    # Navigate to the directory containing the .gitignore file
+    cd "$(dirname "$gitignore")" || continue
+
+    echo "Removing files listed in .gitignore for directory: $(pwd)"
+
+    # Read the .gitignore file and remove files listed in it
+    while IFS= read -r pattern; do
+        # Use grep to filter out comment lines and empty lines
+        if [[ ! "$pattern" =~ ^(\s*#|\s*$) ]]; then
+            # Remove files matching patterns in .gitignore
+            rm -rf -- $pattern
+        fi
+    done < "$gitignore"
+
+    echo "Files removed."
+done
