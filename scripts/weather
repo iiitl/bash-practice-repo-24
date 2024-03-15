@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-# TODO: Display weather of IIIT, Lucknow
+# Display weather of IIIT, Lucknow
 # For more information see: https://wttr.in/:help
+
+# Use curl to fetch weather information from wttr.in
+curl wttr.in/IIIT_Lucknow
