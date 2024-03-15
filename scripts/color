@@ -37,7 +37,6 @@ else
     then
         color 1 ${color_mapping['default']} 
         echo hello
-
     else
         color 1 ${color_mapping[$1]} 
     fi
