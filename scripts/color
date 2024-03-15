@@ -17,4 +17,3 @@ if [[ $1 == 'reset' ]]; then
 else
     color 1 ${color_mapping[$1]}
 fi
-
