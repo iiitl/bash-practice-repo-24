@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+git_repos=$(find . -name .git -type d -prune)
+for repo in $git_repos; do
+    cd "$repo/.." 
+    git clean -xdf
+done
 
-# Removes all files written in .gitignore of any git repository (multiple) present inside current directory
-# To find list of all git repos inside current directory you can use: "find . -name .git -type d -prune"
