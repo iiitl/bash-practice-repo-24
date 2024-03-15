@@ -1,4 +1,20 @@
 #!/usr/bin/env bash
 
-# Removes all files written in .gitignore of any git repository (multiple) present inside current directory
-# To find list of all git repos inside current directory you can use: "find . -name .git -type d -prune"
+#!/bin/bash
+
+# This script removes files listed in the .gitignore file for each Git repository
+# found in the current directory.
+# Find all Git repositories
+git_repos=$(find . -name .git -type d -prune)
+# Loop through each Git repository
+for repo in $git_repos; do
+  cd "$repo"
+  cd ..
+
+  # Run git clean with recommended options for removing ignored files
+  git clean -Xdf
+
+  # Move back to the original directory
+  cd - >/dev/null 2>&1 # Suppress potential errors
+done
+echo "Finished cleaning ignored files in Git repositories."
