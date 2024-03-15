@@ -7,3 +7,11 @@
 # 775 weather
 # 664 ../README.md
 
+for file in "$@"; do
+    if [ -e "$file" ]; then
+        permissions=$(stat -c "%a" "$file")
+        echo "$permissions '$file'"
+    else
+        echo "File '$file' does not exist."
+    fi
+done
