@@ -9,7 +9,14 @@ color() {
 declare -A color_mapping=(
     # TODO: Add more color values
     # Refer bash color codes
+    ['black']=30
+    ['red']=31
+    ['green']=32
+    ['yellow']=33
+    ['blue']=34
     ['magenta']=35
+    ['cyan']=36
+    ['white']=37
 )
 
 if [[ $1 == 'reset' ]]; then
@@ -17,4 +24,3 @@ if [[ $1 == 'reset' ]]; then
 else
     color 1 ${color_mapping[$1]}
 fi
-
