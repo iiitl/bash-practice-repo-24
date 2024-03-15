@@ -1,40 +1,34 @@
 #!/usr/bin/env bash
 
 # Arranges the files by grouping them into folder of their extension name
-# TODO: Run this script in your downloads folder
 
 require() {
     command -v "$1" 1>/dev/null || { >&2 echo "Error: $1 is not installed";exit 1; }
 }
 
 require fd
-require egrep
+require grep
 
 declare -A special_cases=(
-    ['^*.(tar.*|tbz)$']='tar'
-    ['^*.(pdf)$']='pdf_files'
-    ['^*.(png|jpg|jpeg|gif|svf)$']='image_files'
-    ['^*.(mp4|avi|mkv|mov)$']='video_files'
-    ['^*.(mp3|wav|alac)$']='music_files'
-    ['^*.(html)$']='web_files'
-    ['^*.(js|sh)$']='scripting_files'
-    ['^*.(txt)$']='text_files'
-    ['^*.(doc|docx)$']='document_files'
-    ['^*.json|yaml|yml)$']='config_files'
-    ['^*.zip|gz|bz2)$']='compressed_files'
-    
-
-
-    # TODO: Add your own pattern here for similar file types appropriately
-    # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explaination and writing patterns
-    # These (regex) are same as ones used in sed command
+    ['\.(tar.*|tbz)$']='tar'
+    ['\.(pdf)$']='pdf_files'
+    ['\.(png|jpg|jpeg|gif|svf)$']='image_files'
+    ['\.(mp4|avi|mkv|mov)$']='video_files'
+    ['\.(mp3|wav|alac)$']='music_files'
+    ['\.(html)$']='web_files'
+    ['\.(js|sh)$']='scripting_files'
+    ['\.(txt)$']='text_files'
+    ['\.(doc|docx)$']='document_files'
+    ['\.(json|yaml|yml)$']='config_files'
+    ['\.(zip|gz|bz2)$']='compressed_files'
+    # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explanation and writing patterns
 )
 
 fd -tf -d1 \
 | while read file; do
     folder="$PWD/${file##*.}"
     for regex in "${!special_cases[@]}"; do
-        (echo "$file" | egrep -q "$regex") && {
+        (echo "$file" | grep -Eq "$regex") && {
             folder="$PWD/${special_cases[$regex]}"
             break
         }
@@ -43,4 +37,3 @@ fd -tf -d1 \
     mkdir -p "$folder"
     mv "$file" "$folder"
 done
-
