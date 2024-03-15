@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-# Extract the wifi username (SSID)
-# Refer: "iw dev wlan0 link" command output for this
+iw dev wlan0 link | grep SSID
