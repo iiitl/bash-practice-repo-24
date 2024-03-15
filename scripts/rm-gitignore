@@ -1,6 +1,6 @@
 git_repos=$(find . -name .git -type d -prune)
 for repo in $git_repos; do
     cd "$repo/.." 
-    git clean -xdf
+    git clean -Xdf
 done
 
