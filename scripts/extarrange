@@ -15,6 +15,11 @@ declare -A special_cases=(
     # TODO: Add your own pattern here for similar file types appropriately
     # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explaination and writing patterns
     # These (regex) are same as ones used in sed command
+     ['^*.(doc|docx)$']='word'
+    ['^*.(jpg|jpeg|png|gif)$']='images'
+    ['^*.(mp3|wav|flac)$']='audio'
+    ['^*.(mp4|mkv|flv|avi)$']='video'
+    ['^*.(pdf|epub|mob)$']='documents'
 )
 
 fd -tf -d1 \
