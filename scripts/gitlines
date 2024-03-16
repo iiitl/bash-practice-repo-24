@@ -2,3 +2,13 @@
 
 # TODO: Display lines of code by language in a remote git repository
 # Refer "cloc" command or similar
+
+repo_url="https://github.com/shuklamaneesh23/otamoz_gdsc"
+
+tmp_dir=$(mktemp -d)
+git clone "$repo_url" "$tmp_dir"
+
+cd "$tmp_dir" || exit
+cloc .
+
+rm -rf "$tmp_dir"
