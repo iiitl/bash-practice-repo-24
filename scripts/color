@@ -3,7 +3,7 @@
 
 #The sequence \033[35m sets the color to magenta
 #and the sequence \033[0m resets the color to default
-echo -ne "\033[35mHello\033[0m"
+echo -ne "\033[35mhello\033[0m"
 color() {
     echo -ne "\033[$1;$2m"
 }
