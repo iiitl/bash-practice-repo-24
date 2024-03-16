@@ -8,14 +8,14 @@ require() {
 }
 
 require fd
-require egrep
+require grep
 
 declare -A special_cases=(
-    ['^*.(tar.*|tbz)$']='tar'
-    ['^*.(rar|rev|r00|r01)$']='rar'
-    ['^*.(doc.*|odt|pages|rtf|wpd|wps)$']='doc'
-    ['^*.(img|jpg|png)$']='img'
-    ['^*.(mp3|wav)$']='mp3'
+    ['\.(tar.*|tbz)$']='tar'
+    ['\.(rar|rev|r00|r01)$']='rar'
+    ['\.(doc.*|odt|pages|rtf|wpd|wps)$']='doc'
+    ['\.(img|jpg|png)$']='img'
+    ['\.(mp3|wav)$']='mp3'
     # TODO: Add your own pattern here for similar file types appropriately
     # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explaination and writing patterns
     # These (regex) are same as ones used in sed command
