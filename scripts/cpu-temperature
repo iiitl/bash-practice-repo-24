@@ -6,3 +6,4 @@ grep -E 'Tctl|Tdie|Package id' /sys/class/hwmon/hwmon*/temp*_label | head -n1 | 
 #
 # Celcius: 42.0 C
 # Fahrenheit: 107.6 F
+
