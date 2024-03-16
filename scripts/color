@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-
 # TODO (Run this script as): color magenta && echo hello && color reset
 
+#The sequence \033[35m sets the color to magenta
+#and the sequence \033[0m resets the color to default
+echo -ne "\033[35mHello\033[0m"
 color() {
     echo -ne "\033[$1;$2m"
 }
@@ -9,7 +11,14 @@ color() {
 declare -A color_mapping=(
     # TODO: Add more color values
     # Refer bash color codes
+    ['black']=30
+    ['red']=31
+    ['green']=32
+    ['yellow']=33
+    ['blue']=34
     ['magenta']=35
+    ['white']=37
+    
 )
 
 if [[ $1 == 'reset' ]]; then
