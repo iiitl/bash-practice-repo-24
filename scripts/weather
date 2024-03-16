@@ -1,4 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# TODO: Display weather of IIIT, Lucknow
-# For more information see: https://wttr.in/:help
+# Function to display weather report for IIIT Lucknow
+function get_weather() {
+    # Use curl to fetch weather information from wttr.in
+    curl -s "wttr.in/IIIT,Lucknow?format=%C+%t+%w+%h+%p"
+}
+
+# Main script
+echo "Weather Report for IIIT Lucknow:"
+get_weather
