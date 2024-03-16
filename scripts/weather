@@ -2,3 +2,7 @@
 
 # TODO: Display weather of IIIT, Lucknow
 # For more information see: https://wttr.in/:help
+
+echo "Weather at your location--"
+weather=$(curl -s wttr.in)
+echo "$weather" | tail -n +2 | head -n -1
