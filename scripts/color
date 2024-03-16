@@ -7,7 +7,7 @@ color() {
 }
 
 declare -A color_mapping=(
-    # Add more color values
+    # Added more color values
     ['black']=30
     ['red']=31
     ['green']=32
