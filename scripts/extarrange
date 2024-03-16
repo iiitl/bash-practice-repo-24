@@ -30,3 +30,4 @@ fd -tf -d1 \
     mkdir -p "$folder"
     mv "$file" "$folder"
 done
+
