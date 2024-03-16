@@ -1,4 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Extract the wifi username (SSID)
-# Refer: "iw dev wlan0 link" command output for this
+# Check if the iw command exists
+if ! command -v iw &> /dev/null; then
+    echo "Error: iw command not found. Please make sure you have iw installed."
+    exit 1
+fi
+
+# Get the SSID of the currently connected WiFi network
+ssid=$(iw dev wlan0 link | awk -F '[[:space:]][[:space:]]*SSID: ' 'NR==1{print $2}')
+
+# Print the SSID
+echo "SSID of the currently connected WiFi network: $ssid"
