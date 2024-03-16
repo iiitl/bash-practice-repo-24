@@ -1,4 +1,21 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Remove all the binary files (usually made after gcc) present inside current directory
-# Refer "man find" for more information, you can also use modern tool like fd instead of find
+# Function to remove binary files
+remove_binaries() {
+    echo "Removing binary files from the current directory..."
+    # Using find command
+    find . -maxdepth 1 -type f -executable -exec file {} \; | grep "ELF" | cut -d: -f1 | xargs rm -f
+    # Alternatively, using fd command
+    # fd --type f --executable --exec rm -f {}
+    echo "Binary files removed successfully."
+}
+
+# Main script
+echo "Starting binary removal process..."
+
+# Check if current directory is writable
+if [ -w . ]; then
+    remove_binaries
+else
+    echo "Error: Current directory is not writable. Please run the script in a writable directory."
+fi
