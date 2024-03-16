@@ -10,6 +10,10 @@ declare -A color_mapping=(
     # TODO: Add more color values
     # Refer bash color codes
     ['magenta']=35
+    ['cyan']=36
+    ['blue']=34
+    ['yellow']=33
+    ['green']=32
     ['white']=37
 )
 
