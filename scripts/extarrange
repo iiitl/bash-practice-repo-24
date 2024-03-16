@@ -12,8 +12,13 @@ require egrep
 
 declare -A special_cases=(
     ['^*.(tar.*|tbz)$']='tar'
+    ['\.rar$']='rar'
+    ['\.doc$']='doc'
+    ['\.(jpg|jpeg|png|gif|bmp)$']='img'
+    ['\.mp3$']='mp3'
+    ['\.(mp4|avi|mkv)$']='videos' # Example pattern for grouping video files
     # TODO: Add your own pattern here for similar file types appropriately
-    # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explaination and writing patterns
+    # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explanation and writing patterns
     # These (regex) are same as ones used in sed command
 )
 
@@ -27,7 +32,10 @@ fd -tf -d1 \
         }
     done
 
-    mkdir -p "$folder"
+    # Check if the directory already exists before creating it
+    if [ ! -d "$folder" ]; then
+        mkdir -p "$folder"
+    fi
+
     mv "$file" "$folder"
 done
-
