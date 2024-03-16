@@ -2,3 +2,9 @@
 
 # Extract the wifi username (SSID)
 # Refer: "iw dev wlan0 link" command output for this
+ssid=$(iw dev wlan0 link | awk '/SSID/ {print $2}')
+if [ -n "$ssid" ]; then
+    echo "WiFi SSID: $ssid"
+else
+    echo "WiFi SSID not available"
+fi
