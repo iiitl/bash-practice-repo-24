@@ -7,3 +7,10 @@
 # 775 weather
 # 664 ../README.md
 
+    for file in "$@"; do
+        if [ -e "$file" ]; then
+            printf "%o %s\n" "$(stat -f "%Lp" "$file")" "$file"
+        else
+            echo "File '$file' not found."
+        fi
+    done
