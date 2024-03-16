@@ -7,3 +7,14 @@
 # 775 weather
 # 664 ../README.md
 
+perms() {
+    for file in "$@"; do
+        if [ -e "$file" ]; then
+            # Get permissions in octal format
+            perm_octal=$(stat -c '%a' "$file")
+            echo "$perm_octal $file"
+        else
+            echo "File $file does not exist."
+        fi
+    done
+}
