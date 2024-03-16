@@ -1,4 +1,28 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# TODO: Display weather of IIIT, Lucknow
-# For more information see: https://wttr.in/:help
+# Function to display the weather of a location
+display_weather() {
+    # API key for OpenWeatherMap (replace 'YOUR_API_KEY' with your actual API key)
+    api_key="e7edd7afe186e6ecec969bc15d018883"
+
+    # Location to get weather for (replace 'CITY_NAME' with the city name)
+    city="Lucknow"
+
+    # Construct the API URL
+    api_url="https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$api_key&units=metric"
+
+    # Use curl tio fetch data from the API and jq to parse JSON response
+    weather_info=$(curl -s "$api_url" | jq -r '.main.temp, .weather[0].description')
+
+    # Extract temperature and weather description
+    temperature=$(echo "$weather_info" | sed -n '1p')
+    description=$(echo "$weather_info" | sed -n '2p')
+
+    # Print the weather information
+    echo "Current weather in $city:"
+    echo "Temperature: $temperature°C"
+    echo "Description: $description"
+}
+
+# Call the function to display weather
+display_weather
