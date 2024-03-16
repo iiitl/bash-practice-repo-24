@@ -25,13 +25,15 @@ fd -tf -d1 \
 | while read file; do
     folder="$PWD/${file##*.}"
     for regex in "${!special_cases[@]}"; do
-        (echo "$file" | egrep -q "$regex") && {
+        (echo "$file" | grep -Eq "$regex") && {
             folder="$PWD/${special_cases[$regex]}"
             break
         }
     done
-
+    if [ ! -d "$folder" ]
+    then
     mkdir -p "$folder"
+    fi
     mv "$file" "$folder"
 done
 
