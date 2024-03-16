@@ -7,3 +7,13 @@
 # 775 weather
 # 664 ../README.md
 
+
+
+for file in "$@";
+do
+  # Getting octal permissions using stat
+  permissions=$(stat -c "%a" "$file")
+
+  # Displaying filename and permissions
+  echo "$permissions  $file"
+done
