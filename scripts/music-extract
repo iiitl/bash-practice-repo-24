@@ -1,28 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/bash
+extract_audio() {
+    local input_folder="$1"
+    local output_folder="$2"
 
-# TODO: Make a ffmpeg script which takes all the mp4 files in a folder (recursively) and output them in the same position mp3 file
-#
-# E.g.:
-# Videos
-# ├── Clips
-# │   ├── clip1.mp4
-# │   └── clip2.mp4
-# ├── Movies
-# │   ├── movie1.mp4
-# │   └── movie2.mp4
-# └── Songs
-#     ├── Song1.mp4
-#     └── Song2.mp4
-# music-extract Videos
-#
-# The above folder will create another folder with the position of file with just there audio
-# Music
-# ├── Clips
-# │   ├── clip1.mp3
-# │   └── clip2.mp3
-# ├── Movies
-# │   ├── movie1.mp3
-# │   └── movie2.mp3
-# └── Songs
-#     ├── Song1.mp3
-#     └── Song2.mp3
+    find "$input_folder" -type f -name "*.mp4" | while IFS= read -r file; do
+        filename=$(basename "$file" .mp4)
+        mkdir -p "$output_folder/$(dirname "${file#$input_folder}")"
+        ffmpeg -i "$file" -vn -acodec libmp3lame -q:a 2 "$output_folder/${filename}.mp3" < /dev/null
+    done
+}
+if [ -z "$1" ]; then
+    echo "Usage: $0 <input_folder>"
+    exit 1
+fi
+
+input_folder="$1"
+output_folder="Music"
+extract_audio "$input_folder" "$output_folder"
