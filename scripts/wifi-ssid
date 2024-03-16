@@ -2,6 +2,6 @@
 
 # Extract the wifi username (SSID)
 # Refer: "iw dev wlan0 link" command output for this
-SSID=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID:/ {print substr($0, index($0, $2))}')
+SSID=$(networksetup -getairportnetwork en0 | awk -F': ' '/Current Wi-Fi Network:/ {print $2}')
 
 echo "Currently connected Wi-Fi SSID: $SSID"
