@@ -1,9 +1,27 @@
-#!/usr/bin/env bash
+# !/usr/bin/env bash
 
 # TODO: Make it print out permissions of the given files in octal format
-#
+
 # E.g.:
 # $ perms weather ../README.md
 # 775 weather
 # 664 ../README.md
 
+#!/usr/bin/env bash
+
+# Function to print permissions of a file in octal format
+get_octal_permissions() {
+    if [ -e "$1" ]; then
+        stat -c "%a" "$1"
+    else
+        echo "File '$1' not found"
+    fi
+}
+
+# Iterate through each file provided as arguments
+for file in "$@"; do
+    permissions=$(get_octal_permissions "$file")
+    if [ -n "$permissions" ]; then
+        echo "$permissions $file"
+    fi
+done
