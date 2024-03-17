@@ -2,3 +2,10 @@
 
 # TODO: Display lines of code by language in a remote git repository
 # Refer "cloc" command or similar
+
+repository_url="$1"
+git clone "$repository_url" codebase
+cd codebase 
+cloc .
+cd ..
+rm -rf codebase
