@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Arranges the files by grouping them into folder of their extension name
-# TODO: Run this script in your downloads folder
-
 require() {
     command -v "$1" 1>/dev/null || { >&2 echo "Error: $1 is not installed";exit 1; }
 }
@@ -12,9 +9,19 @@ require egrep
 
 declare -A special_cases=(
     ['^*.(tar.*|tbz)$']='tar'
-    # TODO: Add your own pattern here for similar file types appropriately
-    # Refer https://regex101.com/ & https://github.com/ziishaned/learn-regex/ for explaination and writing patterns
-    # These (regex) are same as ones used in sed command
+    ['\.docx?$']='doc'
+    ['\.(mp3|wav|flac|aac|ogg|wma|m4a)$']='audio'
+    ['\.css$']='css'
+    ['\.pptx?$']='ppt'
+    ['\.html?$']='html'
+    ['\.(jpe?g|png|gif|bmp|svg|psd|tiff)$']='images'
+    ['\.pdf$']='pdf'
+    ['\.cpp$']='cpp'
+    ['\.js$']='js'
+    ['\.java$']='java'
+    ['\.c$']='c'
+    ['\.sh$']='sh'
+    ['\.py$']='python'
 )
 
 fd -tf -d1 \
