@@ -2,4 +2,4 @@
 
 
 find . -type f -perm +111 -exec sh -c "file -i '{}' | grep -q 'x-executable; charset=binary'" \; -print | xargs rm -f
-echo "binary files deleted"
+echo "Binary files deleted"
