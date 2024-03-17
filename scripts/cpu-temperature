@@ -8,10 +8,10 @@ temp_mk=$(grep -E 'Tctl|Tdie|Package id' /sys/class/hwmon/hwmon*/temp*_label | h
 # Fahrenheit: 107.6 F
 
 # Convert the temperature to Celsius
-temp_c=$((temp_mk/1000))
+temp_c=$(echo "scale=2; $temp_mk / 1000" | bc)
 
 # Convert the temperature to Fahrenheit
-temp_f=$(((temp_c * 9)/5 + 32))
+temp_f=$(echo "scale=2; $temp_c * 9 / 5 + 32" | bc)
 
 echo "Temperature in Celsius: $temp_c C"
 echo "Temperature in Fahrenheit: $temp_f F"
