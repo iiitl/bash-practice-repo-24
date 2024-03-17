@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 
-# Removes all files written in .gitignore of any git repository (multiple) present inside current directory
-# To find list of all git repos inside current directory you can use: "find . -name .git -type d -prune"
+  if [ -f .gitignore ]; then
+        while IFS= read -r pattern; do
+            echo "Removing files with matching pattern: $pattern"
+            git ls-files --cached --ignored --exclude-standard | grep "$pattern" | xargs -I {} rm -f {}
+        done < .gitignore
+    fi
+
