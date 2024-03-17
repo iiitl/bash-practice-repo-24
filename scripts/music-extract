@@ -1,28 +1,32 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# TODO: Make a ffmpeg script which takes all the mp4 files in a folder (recursively) and output them in the same position mp3 file
-#
-# E.g.:
-# Videos
-# ├── Clips
-# │   ├── clip1.mp4
-# │   └── clip2.mp4
-# ├── Movies
-# │   ├── movie1.mp4
-# │   └── movie2.mp4
-# └── Songs
-#     ├── Song1.mp4
-#     └── Song2.mp4
-# music-extract Videos
-#
-# The above folder will create another folder with the position of file with just there audio
-# Music
-# ├── Clips
-# │   ├── clip1.mp3
-# │   └── clip2.mp3
-# ├── Movies
-# │   ├── movie1.mp3
-# │   └── movie2.mp3
-# └── Songs
-#     ├── Song1.mp3
-#     └── Song2.mp3
+if [ "$#" -ne 1 ]; then
+    echo "Kindly enter the Folder name as argument"
+    exit 1
+fi
+input_directory="$1"
+
+declare -a mp4_files=()
+while IFS= read -r -d '' file; do
+    mp4_files+=("$file")
+done < <(find "$input_directory" -type f -name "*.mp4" -print0)
+
+if [ ${#mp4_files[@]} -eq 0 ]; then
+    echo "No MP4 files found in '$input_directory' or its subdirectories."
+    exit 0
+fi
+
+for mp4_file in "${mp4_files[@]}"; do
+    output_file="${mp4_file%.mp4}.mp3"
+    
+    output_dir=$(dirname "$output_file")
+    mkdir -p "$output_dir"
+    
+    ffmpeg -i "$mp4_file" -vn -acodec libmp3lame -q:a 2 "$output_file"
+    
+    if [ $? -eq 0 ]; then
+        echo "Conversion successful: $mp4_file -> $output_file"
+    else
+        echo "Error: Conversion failed for '$mp4_file'."
+    fi
+done
