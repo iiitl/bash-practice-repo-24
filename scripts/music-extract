@@ -26,3 +26,36 @@
 # └── Songs
 #     ├── Song1.mp3
 #     └── Song2.mp3
+
+
+extract_audio() {
+    local input_folder="$1"
+    local output_folder="$2"
+
+    if [ ! -d "$input_folder" ]; then
+        echo "Input folder '$input_folder' not found."
+        exit 1
+    fi
+
+    mkdir -p "$output_folder"
+
+    find "$input_folder" -type f -name "*.mp4" | while IFS= read -r file; do
+        file_name=$(basename -- "$file")
+        file_name_without_extension="${file_name%.*}"
+
+        ffmpeg -i "$file" -vn -acodec copy "$output_folder/$file_name_without_extension.mp3" >/dev/null 2>&1
+
+        if [ $? -eq 0 ]; then
+            echo "Audio extracted from '$file' and saved as '$output_folder/$file_name_without_extension.mp3'."
+        else
+            echo "Failed to extract audio from '$file'."
+        fi
+    done
+
+    echo "Audio extraction completed."
+}
+
+read -p "Enter the path of the input folder containing MP4 files: " input_folder
+read -p "Enter the path of the output folder to save the extracted audio files (will be created if not exist): " output_folder
+
+extract_audio "$input_folder" "$output_folder"
