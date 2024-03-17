@@ -17,8 +17,16 @@ end_time=$2
 output_file=$3
 video_url=$4
 
-youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' -o "video.mp4" "$video_url"
+temp_file=$(mktemp -u).mp4
+yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' -o "$temp_file" "$video_url" || { echo "Failed to download the video."; exit 1; }
 
-ffmpeg -i "video.mp4" -ss "$start_time" -to "$end_time" -c:v copy -c:a copy "$output_file"
+if [ ! -f "$temp_file" ]; then
+    echo "Failed to download the video."
+    exit 1
+fi
 
-rm "video.mp4"
+ffmpeg -i "$temp_file" -ss "$start_time" -to "$end_time" -c:v copy -c:a copy "$output_file" || { echo "Failed to trim the video."; exit 1; }
+
+
+rm "$temp_file"
+echo "Video trimmed successfully."
