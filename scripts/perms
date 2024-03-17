@@ -15,7 +15,7 @@ getPerms() {
     local permissions=$(stat -c "%a" "$file")
     echo "$permissions $file"
   else
-    echo "Error: this '$file' is not a regular file"
+    echo "Error: this '$file' is not a regular files"
   fi
 }
 
