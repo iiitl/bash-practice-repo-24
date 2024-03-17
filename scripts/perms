@@ -7,3 +7,22 @@
 # 775 weather
 # 664 ../README.md
 
+
+#this function print the permission in octal format
+getPerms() {
+  local file="$1"
+  if [[ -f "$file" ]]; then
+    local permissions=$(stat -c "%a" "$file")
+    echo "$permissions $file"
+  else
+    echo "Error: this '$file' is not a regular file"
+  fi
+}
+
+# it get the file from path variable
+files=("$@")
+
+# it loopp through the  file and print permissions
+for file in "${files[@]}"; do
+  get_perms "$file"
+done
