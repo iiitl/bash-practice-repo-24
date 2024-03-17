@@ -43,7 +43,7 @@ extract_audio() {
         file_name=$(basename -- "$file")
         file_name_without_extension="${file_name%.*}"
 
-        ffmpeg -i "$file" -vn -acodec copy "$output_folder/$file_name_without_extension.mp3" >/dev/null 2>&1
+        ffmpeg -i "$file" -vn -acodec libmp3lame -q:a 2 "$output_folder/$file_name_without_extension.mp3" >/dev/null 2>&1
 
         if [ $? -eq 0 ]; then
             echo "Audio extracted from '$file' and saved as '$output_folder/$file_name_without_extension.mp3'."
