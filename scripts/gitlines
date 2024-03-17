@@ -2,3 +2,38 @@
 
 # TODO: Display lines of code by language in a remote git repository
 # Refer "cloc" command or similar
+
+check_cloc() {
+    command -v cloc >/dev/null 2>&1 || { echo >&2 "cloc is required but not installed. Aborting."; exit 1; }
+}
+
+get_lines_of_code() {
+    local repository=$1
+
+    local temp_dir=$(mktemp -d)
+    git clone "$repository" "$temp_dir" >/dev/null 2>&1 || { echo >&2 "Failed to clone the repository. Aborting."; exit 1; }
+
+    cloc "$temp_dir"
+
+    rm -rf "$temp_dir"
+}
+
+main() {
+    check_cloc
+
+    if [ $# -ne 1 ]; then
+        echo "Usage: $0 <repository_url>"
+        exit 1
+    fi
+
+    local repository_url=$1
+
+    get_lines_of_code "$repository_url"
+}
+
+main "$@"
+
+# First you have to install cloc
+# 
+# Example execution:
+# ./gitlines.sh https://github.com/username/repository.git
