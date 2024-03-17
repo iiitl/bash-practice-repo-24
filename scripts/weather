@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
 
-# TODO: Display weather of IIIT, Lucknow
-# For more information see: https://wttr.in/:help
-location="$1"
-if [[ -z "$location" ]]; then
-  echo "Usage: $0 <location>"
-  exit 1
-fi
+location="kanpur"
 curl -s wttr.in/"$location" | tr -d '\r'
