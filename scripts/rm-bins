@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 
-# Remove all the binary files (usually made after gcc) present inside current directory
-# Refer "man find" for more information, you can also use modern tool like fd instead of find
+# find all the files in current directory
+for files in ./*; do
+    # check that file is binary or not
+    if [[ $(files "$files") == *"executable"* ]]; then
+        #remove all executable file
+        rm "$file"
+    fi
+done
