@@ -26,3 +26,34 @@
 # └── Songs
 #     ├── Song1.mp3
 #     └── Song2.mp3
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <videos_folder>"
+    exit 1
+fi
+
+videos_folder="$1"
+
+if [ ! -d "$videos_folder" ]; then
+    echo "Videos folder not found!"
+    exit 1
+fi
+
+videos_folder=$(realpath "$videos_folder")
+
+output_folder="${videos_folder}_extracted_audio"
+mkdir -p "$output_folder"
+
+find "$videos_folder" -type f -name "*.mp4" | while read -r video_file; do
+    # Extract the filename and directory of the video file
+    file_name=$(basename "$video_file")
+    dir_name=$(dirname "$video_file")
+    
+    output_file="$output_folder/${file_name%.mp4}.mp3"
+    
+    ffmpeg -i "$video_file" -vn -acodec libmp3lame -q:a 2 "$output_file"
+    
+    echo "Extracted audio from $video_file to $output_file"
+done
+
+echo "Process finished."
