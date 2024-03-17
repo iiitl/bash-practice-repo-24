@@ -8,7 +8,7 @@ require() {
 }
 
 require fd
-require egrep
+require grep
 
 declare -A special_cases=(
     ['^*.(tar.*|tbz)$']='tar'
@@ -31,13 +31,13 @@ fd -tf -d1 \
 | while read file; do
     folder="$PWD/${file##*.}"
     for regex in "${!special_cases[@]}"; do
-        (echo "$file" | egrep -q "$regex") && {
+        (echo "$file" | grep -E -q "$regex") && {
             folder="$PWD/${special_cases[$regex]}"
             break
         }
     done
 
-    mkdir -p "$folder"
+    mkdir -p "$folder" || true
     mv "$file" "$folder"
 done
 
