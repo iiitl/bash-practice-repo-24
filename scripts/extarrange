@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Arranges the files by grouping them into folder of their extension name
+# Arranges the files by grouping them into folders of their extension name
 # TODO: Run this script in your downloads folder
 
 require() {
@@ -8,7 +8,7 @@ require() {
 }
 
 require fd
-require egrep
+require grep
 
 declare -A special_cases=(
     ['^*.(tar.*|tbz)$']='tar'
@@ -26,7 +26,7 @@ fd -tf -d1 \
 | while read file; do
     folder="$PWD/${file##*.}"
     for regex in "${!special_cases[@]}"; do
-        (echo "$file" | egrep -q "$regex") && {
+        (echo "$file" | grep -E -q "$regex") && {
             folder="$PWD/${special_cases[$regex]}"
             break
         }
