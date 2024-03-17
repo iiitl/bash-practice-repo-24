@@ -8,7 +8,7 @@ find . -name .git -type d -prune | while read -r git_dir; do
     if [ -f .gitignore ]; then
         while IFS= read -r pattern; do
             echo "Removing files matching pattern: $pattern"
-            git ls-files --ignored --exclude-standard | grep "$pattern" | xargs -I {} rm -f {}
+            git ls-files --cached --ignored --exclude-standard | grep "$pattern" | xargs -I {} rm -f {}
         done < .gitignore
     fi
 
