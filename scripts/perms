@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# TODO: Make it print out permissions of the given files in octal format
-#
-# E.g.:
+# Function: perms
+# Usage: perms file1 file2 ...
+# Description: Prints out permissions of the given files in octal format.
+# Example:
 # $ perms weather ../README.md
 # 775 weather
 # 664 ../README.md
 
-perms() {
-    for file in "$@"; do
+for file in "$@"; do
         if [ -e "$file" ]; then
             # Get permissions in octal format
             perm_octal=$(stat -c '%a' "$file")
@@ -17,4 +17,3 @@ perms() {
             echo "File $file does not exist."
         fi
     done
-}
