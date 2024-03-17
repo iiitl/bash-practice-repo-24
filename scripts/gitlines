@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
 
-# TODO: Display lines of code by language in a remote git repository
-# Refer "cloc" command or similar
+repo_url="https://github.com/Neelesh19634/otamoz_gdsc.git"
+
+tmp_dir=$(mktemp -d)
+git clone "$repo_url" "$tmp_dir"
+
+cd "$tmp_dir" || exit
+cloc .
+
+rm -rf "$tmp_dir"
